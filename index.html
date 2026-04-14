@@ -29,6 +29,7 @@
     </script>
 
     <style>
+        html { scroll-behavior: smooth; }
         .marquee-container {
             overflow: hidden;
             white-space: nowrap;
@@ -42,119 +43,172 @@
             100% { transform: translateX(-50%); }
         }
         .glass-nav {
-            background: rgba(245, 242, 235, 0.7);
+            background: rgba(245, 242, 235, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(74, 59, 50, 0.1);
         }
+        /* Prevenir scroll cuando el menú móvil está abierto */
+        body.menu-open { overflow: hidden; }
     </style>
 </head>
 <body class="bg-crema text-marron font-sans antialiased selection:bg-marron selection:text-crema">
 
-    <header class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <header class="fixed top-0 w-full z-40 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
             
-            <nav class="hidden md:flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase">
+            <nav class="hidden md:flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase flex-1">
                 <a href="#acerca" class="hover:text-black transition-colors">Acerca de</a>
                 <a href="#servicios" class="hover:text-black transition-colors">Servicios</a>
             </nav>
 
-            <div class="text-3xl font-serif tracking-tighter flex flex-col items-center leading-none">
+            <div class="text-2xl md:text-3xl font-serif tracking-tighter flex flex-col items-center leading-none flex-shrink-0 z-50">
                 <span class="font-bold">DAFNEMOZ</span>
-                <span class="text-[0.45rem] tracking-[0.35em] uppercase mt-1 font-sans">Cosmetología Avanzada</span>
+                <span class="text-[0.4rem] md:text-[0.45rem] tracking-[0.35em] uppercase mt-1 font-sans">Cosmetología Avanzada</span>
             </div>
 
-            <div class="flex items-center gap-6">
-                <nav class="hidden md:flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase">
+            <div class="hidden md:flex items-center justify-end gap-6 flex-1">
+                <nav class="flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase">
                     <a href="#blog" class="hover:text-black transition-colors">Blog</a>
                     <a href="#contacto" class="hover:text-black transition-colors">Contacto</a>
                 </nav>
                 <a href="#reserva" class="bg-marron text-crema px-6 py-3 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-black transition-colors">
-                    Reserva Ahora 🗓
+                    Reserva 🗓
                 </a>
             </div>
+
+            <button id="menu-btn" class="md:hidden flex items-center justify-end flex-1 z-50 p-2 text-marron" aria-label="Abrir menú">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
         </div>
     </header>
 
-    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-marron">
-        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop" alt="Piel Radiante" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
+    <div id="mobile-menu" class="fixed inset-0 bg-crema z-40 transform translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col justify-center items-center gap-8">
+        <nav class="flex flex-col items-center gap-8 text-lg font-serif tracking-[0.1em] uppercase">
+            <a href="#acerca" class="mobile-link hover:text-bronce transition-colors">Acerca de</a>
+            <a href="#servicios" class="mobile-link hover:text-bronce transition-colors">Catálogo de Servicios</a>
+            <a href="#blog" class="mobile-link hover:text-bronce transition-colors">Blog</a>
+            <a href="#contacto" class="mobile-link hover:text-bronce transition-colors">Contacto</a>
+        </nav>
+        <a href="#reserva" class="mobile-link mt-4 bg-marron text-crema px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold">
+            Reserva Ahora 🗓
+        </a>
+    </div>
+
+    <section class="relative h-[100svh] flex items-center justify-center overflow-hidden bg-marron">
+        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop" alt="Piel Radiante" class="absolute inset-0 w-full h-full object-cover object-top md:object-center opacity-60 mix-blend-overlay">
         
-        <div class="relative z-20 text-center px-4 flex flex-col items-center mt-16">
-            <h1 class="text-5xl md:text-7xl font-serif text-white mb-6 drop-shadow-md leading-tight">
-                EL AMOR PROPIO ES <br> LA NUEVA BELLEZA.
+        <div class="relative z-20 text-center px-4 flex flex-col items-center mt-12 md:mt-16 w-full max-w-4xl">
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-serif text-white mb-6 drop-shadow-md leading-[1.1]">
+                EL AMOR PROPIO ES <br class="hidden sm:block"> LA NUEVA BELLEZA.
             </h1>
-            <p class="text-lg md:text-xl text-white/90 mb-10 max-w-2xl font-light tracking-wide">
-                Realza tu resplandor natural con nuestros tratamientos de cosmetología avanzada. Un espacio diseñado para tu bienestar.
+            <p class="text-base sm:text-lg md:text-xl text-white/90 mb-10 px-4 font-light tracking-wide max-w-2xl">
+                Realza tu resplandor natural con nuestros tratamientos de cosmetología avanzada.
             </p>
-            <a href="#servicios" class="border border-white text-white px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-white hover:text-marron transition-all duration-300">
+            <a href="#servicios" class="border border-white text-white px-8 md:px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-white hover:text-marron transition-all duration-300 w-full sm:w-auto">
                 Ver Tratamientos
             </a>
         </div>
     </section>
 
     <div class="bg-marron text-crema py-3 marquee-container flex items-center border-t border-white/20">
-        <div class="marquee-content text-xs tracking-[0.25em] uppercase font-semibold">
-            <span class="mx-6">• Nuevos Tratamientos Láser CO2</span>
-            <span class="mx-6">• Consultas Disponibles</span>
-            <span class="mx-6">• Paquetes para Novias</span>
-            <span class="mx-6">• Dafne Moz Clínica Estética</span>
-            <span class="mx-6">• Nuevos Tratamientos Láser CO2</span>
-            <span class="mx-6">• Consultas Disponibles</span>
-            <span class="mx-6">• Paquetes para Novias</span>
-            <span class="mx-6">• Dafne Moz Clínica Estética</span>
+        <div class="marquee-content text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase font-semibold">
+            <span class="mx-4 md:mx-6">• Nuevos Tratamientos Láser CO2</span>
+            <span class="mx-4 md:mx-6">• Consultas Disponibles</span>
+            <span class="mx-4 md:mx-6">• Paquetes para Novias</span>
+            <span class="mx-4 md:mx-6">• Dafne Moz Clínica Estética</span>
+            <span class="mx-4 md:mx-6">• Nuevos Tratamientos Láser CO2</span>
+            <span class="mx-4 md:mx-6">• Consultas Disponibles</span>
+            <span class="mx-4 md:mx-6">• Paquetes para Novias</span>
+            <span class="mx-4 md:mx-6">• Dafne Moz Clínica Estética</span>
         </div>
     </div>
 
-    <section id="servicios" class="py-24 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-serif mb-4">Catálogo de Servicios</h2>
-            <p class="text-marron/70 max-w-2xl mx-auto font-light">Procedimientos estéticos avanzados diseñados para resaltar tu belleza natural con la más alta tecnología.</p>
+    <section id="servicios" class="py-20 md:py-24 px-4 md:px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-12 md:mb-16">
+            <h2 class="text-3xl md:text-4xl font-serif mb-4">Catálogo de Servicios</h2>
+            <p class="text-marron/70 text-sm md:text-base max-w-2xl mx-auto font-light px-4">Procedimientos estéticos avanzados diseñados para resaltar tu belleza natural con la más alta tecnología.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             <div class="group cursor-pointer">
-                <div class="overflow-hidden mb-4 h-80 bg-gray-200">
+                <div class="overflow-hidden mb-4 h-72 md:h-80 bg-gray-200 relative">
                     <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2070&auto=format&fit=crop" alt="Láser CO2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 bg-crema/90 text-marron text-[10px] uppercase tracking-widest px-3 py-1 font-semibold">Láser</div>
                 </div>
-                <h3 class="text-xl font-serif mb-2">Láser CO2 Fraccionado</h3>
+                <h3 class="text-xl font-serif mb-2">CO2 Fraccionado</h3>
                 <p class="text-sm font-light text-marron/80 mb-4">Rejuvenecimiento avanzado y tratamiento de cicatrices para una textura de piel impecable.</p>
                 <div class="flex justify-between items-center border-t border-marron/20 pt-4">
-                    <span class="text-xs font-semibold tracking-widest uppercase">Desde $8,000 DOP</span>
-                    <span class="text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
+                    <span class="text-[10px] md:text-xs font-semibold tracking-widest uppercase">Desde $8,000 DOP</span>
+                    <span class="text-[10px] md:text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
                 </div>
             </div>
 
             <div class="group cursor-pointer">
-                <div class="overflow-hidden mb-4 h-80 bg-gray-200">
+                <div class="overflow-hidden mb-4 h-72 md:h-80 bg-gray-200 relative">
                     <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2070&auto=format&fit=crop" alt="Relleno de Labios" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 bg-crema/90 text-marron text-[10px] uppercase tracking-widest px-3 py-1 font-semibold">Facial</div>
                 </div>
-                <h3 class="text-xl font-serif mb-2">Relleno de Labios / Perfilado</h3>
-                <p class="text-sm font-light text-marron/80 mb-4">Armonización facial con ácido hialurónico para volumen e hidratación natural.</p>
+                <h3 class="text-xl font-serif mb-2">Relleno de Labios</h3>
+                <p class="text-sm font-light text-marron/80 mb-4">Armonización facial con ácido hialurónico para volumen, perfilado e hidratación natural.</p>
                 <div class="flex justify-between items-center border-t border-marron/20 pt-4">
-                    <span class="text-xs font-semibold tracking-widest uppercase">Desde $15,000 DOP</span>
-                    <span class="text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
+                    <span class="text-[10px] md:text-xs font-semibold tracking-widest uppercase">Desde $15,000 DOP</span>
+                    <span class="text-[10px] md:text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
                 </div>
             </div>
 
             <div class="group cursor-pointer">
-                <div class="overflow-hidden mb-4 h-80 bg-gray-200">
+                <div class="overflow-hidden mb-4 h-72 md:h-80 bg-gray-200 relative">
                     <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop" alt="Endoláser Corporal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 bg-crema/90 text-marron text-[10px] uppercase tracking-widest px-3 py-1 font-semibold">Corporal</div>
                 </div>
-                <h3 class="text-xl font-serif mb-2">Endoláser Corporal</h3>
-                <p class="text-sm font-light text-marron/80 mb-4">Tratamiento mínimamente invasivo para tensado de la piel y reducción de grasa localizada.</p>
+                <h3 class="text-xl font-serif mb-2">Endoláser</h3>
+                <p class="text-sm font-light text-marron/80 mb-4">Tratamiento mínimamente invasivo para el tensado de la piel y reducción de grasa localizada.</p>
                 <div class="flex justify-between items-center border-t border-marron/20 pt-4">
-                    <span class="text-xs font-semibold tracking-widest uppercase">Desde $25,000 DOP</span>
-                    <span class="text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
+                    <span class="text-[10px] md:text-xs font-semibold tracking-widest uppercase">Desde $25,000 DOP</span>
+                    <span class="text-[10px] md:text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
                 </div>
             </div>
         </div>
         
-        <div class="text-center mt-12">
-            <a href="#catalogo" class="inline-block border border-marron text-marron px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-marron hover:text-crema transition-all duration-300">
+        <div class="text-center mt-12 md:mt-16">
+            <a href="#catalogo" class="inline-block border border-marron text-marron px-8 md:px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-marron hover:text-crema transition-all duration-300 w-full sm:w-auto">
                 Ver Catálogo Completo
             </a>
         </div>
     </section>
 
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.classList.add('menu-open');
+                // Cambiar a icono 'X'
+                menuBtn.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.classList.remove('menu-open');
+                // Cambiar a icono 'Hamburguesa'
+                menuBtn.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>`;
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Cerrar el menú al hacer clic en un enlace
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+    </script>
 </body>
 </html>
