@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dafne Moz | Cosmetología Avanzada</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        crema: '#F5F2EB',
+                        marron: '#4A3B32',
+                        bronce: '#B08D6A'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .glass-nav {
+            background: rgba(245, 242, 235, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(74, 59, 50, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-crema text-marron font-sans antialiased selection:bg-marron selection:text-crema">
+
+    <header class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <nav class="hidden md:flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase">
+                <a href="#acerca" class="hover:text-black transition-colors">Acerca de</a>
+                <a href="#servicios" class="hover:text-black transition-colors">Servicios</a>
+            </nav>
+
+            <div class="text-3xl font-serif tracking-tighter flex flex-col items-center leading-none">
+                <span class="font-bold">DAFNEMOZ</span>
+                <span class="text-[0.45rem] tracking-[0.35em] uppercase mt-1 font-sans">Cosmetología Avanzada</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase">
+                    <a href="#blog" class="hover:text-black transition-colors">Blog</a>
+                    <a href="#contacto" class="hover:text-black transition-colors">Contacto</a>
+                </nav>
+                <a href="#reserva" class="bg-marron text-crema px-6 py-3 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-black transition-colors">
+                    Reserva Ahora 🗓
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-marron">
+        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop" alt="Piel Radiante" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
+        
+        <div class="relative z-20 text-center px-4 flex flex-col items-center mt-16">
+            <h1 class="text-5xl md:text-7xl font-serif text-white mb-6 drop-shadow-md leading-tight">
+                EL AMOR PROPIO ES <br> LA NUEVA BELLEZA.
+            </h1>
+            <p class="text-lg md:text-xl text-white/90 mb-10 max-w-2xl font-light tracking-wide">
+                Realza tu resplandor natural con nuestros tratamientos de cosmetología avanzada. Un espacio diseñado para tu bienestar.
+            </p>
+            <a href="#servicios" class="border border-white text-white px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-white hover:text-marron transition-all duration-300">
+                Ver Tratamientos
+            </a>
+        </div>
+    </section>
+
+    <div class="bg-marron text-crema py-3 marquee-container flex items-center border-t border-white/20">
+        <div class="marquee-content text-xs tracking-[0.25em] uppercase font-semibold">
+            <span class="mx-6">• Nuevos Tratamientos Láser CO2</span>
+            <span class="mx-6">• Consultas Disponibles</span>
+            <span class="mx-6">• Paquetes para Novias</span>
+            <span class="mx-6">• Dafne Moz Clínica Estética</span>
+            <span class="mx-6">• Nuevos Tratamientos Láser CO2</span>
+            <span class="mx-6">• Consultas Disponibles</span>
+            <span class="mx-6">• Paquetes para Novias</span>
+            <span class="mx-6">• Dafne Moz Clínica Estética</span>
+        </div>
+    </div>
+
+    <section id="servicios" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-serif mb-4">Catálogo de Servicios</h2>
+            <p class="text-marron/70 max-w-2xl mx-auto font-light">Procedimientos estéticos avanzados diseñados para resaltar tu belleza natural con la más alta tecnología.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="group cursor-pointer">
+                <div class="overflow-hidden mb-4 h-80 bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2070&auto=format&fit=crop" alt="Láser CO2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <h3 class="text-xl font-serif mb-2">Láser CO2 Fraccionado</h3>
+                <p class="text-sm font-light text-marron/80 mb-4">Rejuvenecimiento avanzado y tratamiento de cicatrices para una textura de piel impecable.</p>
+                <div class="flex justify-between items-center border-t border-marron/20 pt-4">
+                    <span class="text-xs font-semibold tracking-widest uppercase">Desde $8,000 DOP</span>
+                    <span class="text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
+                </div>
+            </div>
+
+            <div class="group cursor-pointer">
+                <div class="overflow-hidden mb-4 h-80 bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2070&auto=format&fit=crop" alt="Relleno de Labios" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <h3 class="text-xl font-serif mb-2">Relleno de Labios / Perfilado</h3>
+                <p class="text-sm font-light text-marron/80 mb-4">Armonización facial con ácido hialurónico para volumen e hidratación natural.</p>
+                <div class="flex justify-between items-center border-t border-marron/20 pt-4">
+                    <span class="text-xs font-semibold tracking-widest uppercase">Desde $15,000 DOP</span>
+                    <span class="text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
+                </div>
+            </div>
+
+            <div class="group cursor-pointer">
+                <div class="overflow-hidden mb-4 h-80 bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop" alt="Endoláser Corporal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <h3 class="text-xl font-serif mb-2">Endoláser Corporal</h3>
+                <p class="text-sm font-light text-marron/80 mb-4">Tratamiento mínimamente invasivo para tensado de la piel y reducción de grasa localizada.</p>
+                <div class="flex justify-between items-center border-t border-marron/20 pt-4">
+                    <span class="text-xs font-semibold tracking-widest uppercase">Desde $25,000 DOP</span>
+                    <span class="text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="#catalogo" class="inline-block border border-marron text-marron px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-marron hover:text-crema transition-all duration-300">
+                Ver Catálogo Completo
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>
