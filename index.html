@@ -1,214 +1,739 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dafne Moz | Cosmetología Avanzada</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dafne Moz | Cosmetología Avanzada & Cirugía Estética</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        crema: '#F5F2EB',
-                        marron: '#4A3B32',
-                        bronce: '#B08D6A'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
+:root {
+  --beige:      #E8E0D5;
+  --beige-mid:  #D9CFC3;
+  --beige-dark: #C4B9AA;
+  --cream:      #F5F0E8;
+  --cream-soft: #FAF7F3;
+  --dark:       #1C1714;
+  --dark-mid:   #2C2520;
+  --text:       #1C1714;
+  --muted:      #6B5F52;
+  --light:      #9C8E82;
+  --gold:       #B8965A;
+  --gold-l:     #D4AF7A;
+  --white:      #FFFFFF;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Jost', sans-serif;
+}
 
-    <style>
-        html { scroll-behavior: smooth; }
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .glass-nav {
-            background: rgba(245, 242, 235, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(74, 59, 50, 0.1);
-        }
-        /* Prevenir scroll cuando el menú móvil está abierto */
-        body.menu-open { overflow: hidden; }
-    </style>
+body { font-family: var(--sans); color: var(--text); background: var(--cream-soft); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: var(--beige);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem; height: 72px;
+  border-bottom: 1px solid var(--beige-mid);
+  transition: box-shadow 0.3s;
+}
+nav.shadow { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+.nav-left, .nav-right { display: flex; align-items: center; gap: 2.5rem; }
+.nav-left a, .nav-right a {
+  font-family: var(--sans); font-size: 0.68rem; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text); text-decoration: none; transition: color 0.2s;
+}
+.nav-left a:hover, .nav-right a:hover { color: var(--gold); }
+
+.nav-center {
+  text-align: center; position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-center .brand {
+  font-family: var(--serif); font-size: 1.45rem; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--dark); text-decoration: none; display: block; line-height: 1;
+}
+.nav-center .sub {
+  font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--muted); margin-top: 3px; display: block;
+}
+
+.btn-reserva {
+  background: var(--dark) !important; color: var(--white) !important;
+  padding: 0.65rem 1.4rem !important; letter-spacing: 0.15em !important;
+  font-size: 0.65rem !important; display: inline-block !important;
+  transition: background 0.25s !important; border: none !important;
+}
+.btn-reserva:hover { background: var(--gold) !important; }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { display: block; width: 22px; height: 1.5px; background: var(--dark); }
+
+/* MOBILE MENU */
+.mob-menu {
+  display: none; position: fixed; inset: 0; background: var(--beige);
+  z-index: 300; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+}
+.mob-menu.open { display: flex; }
+.mob-menu a { font-family: var(--serif); font-size: 2.2rem; font-weight: 400; color: var(--dark); text-decoration: none; }
+.mob-menu a:hover { color: var(--gold); }
+.mob-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark); }
+
+/* HERO */
+.hero {
+  height: 100vh; min-height: 680px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden; padding-top: 72px;
+}
+.hero-img {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070') center/cover no-repeat;
+}
+.hero-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(28,23,20,0.48);
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 2rem; }
+.hero-content h1 {
+  font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700; color: var(--white); letter-spacing: 0.02em;
+  line-height: 1.05; margin-bottom: 1.5rem; text-transform: uppercase;
+}
+.hero-content p {
+  font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.78);
+  line-height: 1.75; max-width: 520px; margin: 0 auto 2.5rem;
+}
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-ol {
+  background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.7);
+  padding: 0.9rem 2.2rem; font-family: var(--sans); font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: all 0.3s;
+}
+.btn-ol:hover { background: var(--white); color: var(--dark); }
+.btn-fl {
+  background: var(--dark); color: var(--white); border: 1px solid var(--dark);
+  padding: 0.9rem 2.2rem; font-family: var(--sans); font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: all 0.3s;
+}
+.btn-fl:hover { background: var(--gold); border-color: var(--gold); }
+
+/* TICKER */
+.ticker { background: var(--dark); padding: 0.9rem 0; overflow: hidden; }
+.ticker-track { display: inline-flex; animation: tick 40s linear infinite; white-space: nowrap; }
+.ticker-track span { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin: 0 2rem; }
+.ticker-track .dot { color: var(--gold); }
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* SECTION UTILS */
+.s-label {
+  font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 0.9rem;
+}
+.s-label::after { content: ''; display: block; width: 36px; height: 1px; background: var(--gold); }
+.s-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1.1; color: var(--dark); margin-bottom: 1.2rem; }
+.s-title em { font-style: italic; color: var(--gold); }
+.s-desc { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: var(--muted); }
+
+/* TEAM */
+.team { background: var(--cream); padding: 6rem 2rem; }
+.team-intro { max-width: 1080px; margin: 0 auto 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.team-intro-text .s-desc { margin-bottom: 2rem; }
+.team-visual { position: relative; }
+.team-visual img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+.quote-badge { position: absolute; bottom: -1.5rem; left: -1.5rem; background: var(--dark); padding: 1.5rem; max-width: 210px; }
+.quote-badge p { font-family: var(--serif); font-size: 0.95rem; font-style: italic; font-weight: 300; color: var(--gold-l); line-height: 1.5; }
+
+.profiles { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.profile { background: var(--white); overflow: hidden; transition: box-shadow 0.35s; }
+.profile:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.09); }
+.profile-img { overflow: hidden; aspect-ratio: 4/5; position: relative; }
+.profile-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+.profile:hover .profile-img img { transform: scale(1.04); }
+.profile-pill { position: absolute; top: 1.5rem; left: 0; background: var(--beige); color: var(--dark); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 1rem; }
+.profile-body { padding: 2rem; }
+.profile-body h3 { font-family: var(--serif); font-size: 1.75rem; font-weight: 400; color: var(--dark); margin-bottom: 0.25rem; }
+.profile-body .role { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.profile-body p { font-size: 0.88rem; font-weight: 300; line-height: 1.8; color: var(--muted); margin-bottom: 1.25rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag { font-size: 0.62rem; letter-spacing: 0.1em; color: var(--muted); border: 1px solid var(--beige-mid); padding: 0.3rem 0.7rem; transition: 0.2s; }
+.tag:hover { border-color: var(--gold); color: var(--gold); }
+
+/* SERVICES */
+.services { background: var(--cream-soft); padding: 6rem 2rem; }
+.services-head { max-width: 1080px; margin: 0 auto 3rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; }
+.services-note { font-size: 0.85rem; font-weight: 300; color: var(--light); max-width: 260px; line-height: 1.7; text-align: right; }
+
+.tabs { max-width: 1080px; margin: 0 auto 2rem; display: flex; border-bottom: 1px solid var(--beige-mid); }
+.tab { background: none; border: none; border-bottom: 2px solid transparent; padding: 0.85rem 2rem; cursor: pointer; font-family: var(--sans); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); transition: 0.25s; margin-bottom: -1px; }
+.tab.on { color: var(--dark); border-bottom-color: var(--dark); }
+.tab:hover { color: var(--dark); }
+
+.svc-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--beige-mid); }
+.card { background: var(--cream-soft); padding: 2.5rem; display: none; position: relative; overflow: hidden; transition: background 0.3s; }
+.card.on { display: block; }
+.card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--dark); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+.card:hover::after { transform: scaleX(1); }
+.card:hover { background: var(--white); }
+.card-num { font-family: var(--serif); font-size: 3rem; font-weight: 400; color: rgba(184,150,90,0.18); line-height: 1; margin-bottom: 1.5rem; }
+.card-cat { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.card-name { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; color: var(--dark); margin-bottom: 0.75rem; line-height: 1.2; }
+.card-desc { font-size: 0.85rem; font-weight: 300; line-height: 1.75; color: var(--muted); margin-bottom: 1.25rem; }
+.card-price { font-size: 0.78rem; font-weight: 500; color: var(--dark); }
+
+/* STATS */
+.stats { background: var(--dark); padding: 4rem 2rem; }
+.stats-row { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+.stat { text-align: center; padding: 1.5rem; border-right: 1px solid rgba(255,255,255,0.07); }
+.stat:last-child { border: none; }
+.stat-n { font-family: var(--serif); font-size: 3.2rem; font-weight: 400; color: var(--gold-l); line-height: 1; margin-bottom: 0.5rem; }
+.stat-l { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+/* CLINIC */
+.clinic { background: var(--beige); padding: 6rem 2rem; }
+.clinic-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 6rem; align-items: center; }
+.clinic-imgs { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 260px 200px; gap: 1rem; }
+.c-img { overflow: hidden; }
+.c-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+.c-img:hover img { transform: scale(1.05); }
+.c-img.tall { grid-row: span 2; }
+.clinic-text .s-desc { margin-bottom: 1.75rem; }
+.clinic-list { list-style: none; margin-bottom: 2.5rem; }
+.clinic-list li { font-size: 0.88rem; font-weight: 300; color: var(--muted); padding: 0.9rem 0; border-bottom: 1px solid var(--beige-mid); display: flex; align-items: flex-start; gap: 0.9rem; line-height: 1.6; }
+.clinic-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); margin-top: 0.5rem; flex-shrink: 0; }
+
+/* TESTIMONIALS */
+.testi { background: var(--dark); padding: 6rem 2rem; }
+.testi .s-label { color: var(--gold-l); }
+.testi .s-label::after { background: var(--gold-l); }
+.testi .s-title { color: var(--white); }
+.testi-head { max-width: 1080px; margin: 0 auto 3rem; }
+.testi-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.t-card { border: 1px solid rgba(255,255,255,0.1); padding: 2rem; }
+.t-q { font-family: var(--serif); font-size: 2.5rem; color: var(--gold); line-height: 0.8; margin-bottom: 1rem; }
+.t-text { font-size: 0.88rem; font-weight: 300; font-style: italic; line-height: 1.8; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; }
+.t-author { display: flex; align-items: center; gap: 0.75rem; }
+.t-av { width: 38px; height: 38px; border-radius: 50%; background: rgba(184,150,90,0.2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 0.9rem; color: var(--gold-l); flex-shrink: 0; }
+.t-name { font-size: 0.78rem; font-weight: 500; color: var(--white); margin-bottom: 0.15rem; }
+.t-detail { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+
+/* RESERVA */
+.reserva { background: var(--cream-soft); padding: 6rem 2rem; }
+.reserva-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.reserva-info .s-desc { margin-bottom: 2.5rem; }
+.c-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.c-item { display: flex; gap: 1rem; align-items: flex-start; }
+.c-icon { width: 40px; height: 40px; flex-shrink: 0; border: 1px solid var(--beige-mid); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.c-txt strong { display: block; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem; font-weight: 400; }
+.c-txt p { font-size: 0.88rem; font-weight: 300; color: var(--muted); line-height: 1.5; }
+
+.form-wrap { background: var(--white); padding: 2.5rem; }
+.form-wrap h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--dark); margin-bottom: 0.4rem; }
+.form-sub { font-size: 0.82rem; color: var(--light); margin-bottom: 2rem; }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fg { margin-bottom: 1.1rem; }
+.fg label { display: block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); margin-bottom: 0.45rem; }
+.fg input, .fg select, .fg textarea { width: 100%; border: 1px solid var(--beige-mid); background: var(--cream-soft); padding: 0.8rem 0.9rem; font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: var(--dark); outline: none; transition: border-color 0.2s; appearance: none; }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--dark); }
+.fg textarea { resize: vertical; min-height: 90px; }
+.btn-submit { width: 100%; background: var(--dark); color: var(--white); border: none; padding: 1rem; font-family: var(--sans); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: background 0.25s; margin-top: 0.5rem; }
+.btn-submit:hover { background: var(--gold); }
+
+/* FOOTER */
+footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.05); padding: 4rem 2rem 2rem; }
+.ft-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.ft-brand .logo { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--cream); letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+.ft-brand .sub { font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+.ft-brand p { font-size: 0.82rem; font-weight: 300; color: rgba(255,255,255,0.35); line-height: 1.7; }
+.ft-col h4 { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.1rem; font-weight: 400; }
+.ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.ft-col ul a { font-size: 0.82rem; font-weight: 300; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.ft-col ul a:hover { color: var(--gold-l); }
+.ft-bottom { max-width: 1080px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.ft-bottom p { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+.ft-socials { display: flex; gap: 1.5rem; }
+.ft-socials a { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+.ft-socials a:hover { color: var(--gold); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  nav { padding: 0 1.5rem; justify-content: center; position: relative; }
+  .nav-left, .nav-right { display: none; }
+  .hamburger { display: flex; position: absolute; right: 1.5rem; }
+  .nav-center { position: static; transform: none; }
+  .team-intro, .profiles, .clinic-inner, .reserva-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .svc-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .stat:nth-child(3), .stat:last-child { border-bottom: none; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .ft-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .services-head { flex-direction: column; align-items: flex-start; }
+  .services-note { text-align: left; }
+  .clinic-imgs { grid-template-rows: 200px 160px; }
+  .quote-badge { position: static; margin-top: 1rem; max-width: 100%; }
+}
+@media (max-width: 600px) {
+  .svc-grid { grid-template-columns: 1fr; }
+  .tabs { overflow-x: auto; }
+  .tab { white-space: nowrap; padding: 0.85rem 1.25rem; }
+  .frow { grid-template-columns: 1fr; }
+  .ft-inner { grid-template-columns: 1fr; }
+  .ft-bottom { flex-direction: column; text-align: center; }
+  .hero-content h1 { font-size: 2.5rem; }
+  .clinic-imgs { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .c-img.tall { grid-row: auto; }
+}
+</style>
 </head>
-<body class="bg-crema text-marron font-sans antialiased selection:bg-marron selection:text-crema">
+<body>
 
-    <header class="fixed top-0 w-full z-40 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
-            
-            <nav class="hidden md:flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase flex-1">
-                <a href="#acerca" class="hover:text-black transition-colors">Acerca de</a>
-                <a href="#servicios" class="hover:text-black transition-colors">Servicios</a>
-            </nav>
+<nav id="nav">
+  <div class="nav-left">
+    <a href="#acerca">Acerca de</a>
+    <a href="#servicios">Servicios</a>
+  </div>
+  <div class="nav-center">
+    <a href="#" class="brand">DAFNEMOZ</a>
+    <span class="sub">Cosmetología Avanzada</span>
+  </div>
+  <div class="nav-right">
+    <a href="#blog">Blog</a>
+    <a href="#reserva">Contacto</a>
+    <a href="#reserva" class="btn-reserva">Reserva 🗓</a>
+  </div>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
 
-            <div class="text-2xl md:text-3xl font-serif tracking-tighter flex flex-col items-center leading-none flex-shrink-0 z-50">
-                <span class="font-bold">DAFNEMOZ</span>
-                <span class="text-[0.4rem] md:text-[0.45rem] tracking-[0.35em] uppercase mt-1 font-sans">Cosmetología Avanzada</span>
-            </div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">✕</button>
+  <a href="#acerca">Acerca de</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#clinica">Clínica</a>
+  <a href="#testimonios">Testimonios</a>
+  <a href="#reserva">Reservar</a>
+</div>
 
-            <div class="hidden md:flex items-center justify-end gap-6 flex-1">
-                <nav class="flex gap-8 text-xs font-semibold tracking-[0.2em] uppercase">
-                    <a href="#blog" class="hover:text-black transition-colors">Blog</a>
-                    <a href="#contacto" class="hover:text-black transition-colors">Contacto</a>
-                </nav>
-                <a href="#reserva" class="bg-marron text-crema px-6 py-3 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-black transition-colors">
-                    Reserva 🗓
-                </a>
-            </div>
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <h1>El amor propio<br>es la nueva belleza.</h1>
+    <p>Cosmetología avanzada y cirugía estética facial de élite. Realza tu resplandor natural con los mejores especialistas.</p>
+    <div class="hero-btns">
+      <a href="#servicios" class="btn-ol">Ver Tratamientos</a>
+      <a href="#acerca" class="btn-fl">Conoce al Equipo</a>
+    </div>
+  </div>
+</section>
 
-            <button id="menu-btn" class="md:hidden flex items-center justify-end flex-1 z-50 p-2 text-marron" aria-label="Abrir menú">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+<div class="ticker">
+  <div class="ticker-track">
+    <span>CO2 Fraccionado <span class="dot">·</span></span>
+    <span>ND:YAG <span class="dot">·</span></span>
+    <span>Depilación Láser <span class="dot">·</span></span>
+    <span>Endoláser <span class="dot">·</span></span>
+    <span>Lifting Quirúrgico <span class="dot">·</span></span>
+    <span>Bioestimulación <span class="dot">·</span></span>
+    <span>Botox <span class="dot">·</span></span>
+    <span>EMS Sculp <span class="dot">·</span></span>
+    <span>Remodelación Facial <span class="dot">·</span></span>
+    <span>Rejuvenecimiento de Cuello <span class="dot">·</span></span>
+    <span>Radiofrecuencia <span class="dot">·</span></span>
+    <span>Paquetes para Novias <span class="dot">·</span></span>
+    <span>CO2 Fraccionado <span class="dot">·</span></span>
+    <span>ND:YAG <span class="dot">·</span></span>
+    <span>Depilación Láser <span class="dot">·</span></span>
+    <span>Endoláser <span class="dot">·</span></span>
+    <span>Lifting Quirúrgico <span class="dot">·</span></span>
+    <span>Bioestimulación <span class="dot">·</span></span>
+    <span>Botox <span class="dot">·</span></span>
+    <span>EMS Sculp <span class="dot">·</span></span>
+    <span>Remodelación Facial <span class="dot">·</span></span>
+    <span>Rejuvenecimiento de Cuello <span class="dot">·</span></span>
+    <span>Radiofrecuencia <span class="dot">·</span></span>
+    <span>Paquetes para Novias <span class="dot">·</span></span>
+  </div>
+</div>
+
+<section class="team" id="acerca">
+  <div class="team-intro reveal">
+    <div class="team-intro-text">
+      <p class="s-label">Nuestro Equipo</p>
+      <h2 class="s-title">Dos especialistas,<br><em>una visión.</em></h2>
+      <p class="s-desc">Somos una clínica de estética integral liderada por dos hermanos con la misma pasión: transformar vidas a través de la belleza. Combinamos cosmetología avanzada con cirugía estética facial para ofrecer resultados que hablan por sí solos.</p>
+      <br>
+      <a href="#reserva" class="btn-fl" style="display:inline-block;text-decoration:none;margin-top:1rem;">Agendar Consulta</a>
+    </div>
+    <div class="team-visual">
+      <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=800&auto=format&fit=crop" alt="Clínica Dafne Moz">
+      <div class="quote-badge"><p>"La belleza auténtica surge desde adentro hacia afuera."</p></div>
+    </div>
+  </div>
+
+  <div class="profiles">
+    <div class="profile reveal">
+      <div class="profile-img">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop" alt="Dafne Moz">
+        <span class="profile-pill">Cosmetología Avanzada</span>
+      </div>
+      <div class="profile-body">
+        <h3>Dafne Moz</h3>
+        <p class="role">Cosmetóloga & Directora Clínica</p>
+        <p>Especialista en tratamientos faciales, láser y corporales de última generación. Con certificaciones internacionales y años de experiencia, combina tecnología avanzada con un enfoque completamente personalizado.</p>
+        <div class="tags">
+          <span class="tag">CO2 Fraccionado</span>
+          <span class="tag">ND:YAG</span>
+          <span class="tag">Endoláser</span>
+          <span class="tag">Bioestimulación</span>
+          <span class="tag">Botox</span>
+          <span class="tag">Novias</span>
         </div>
-    </header>
-
-    <div id="mobile-menu" class="fixed inset-0 bg-crema z-40 transform translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col justify-center items-center gap-8">
-        <nav class="flex flex-col items-center gap-8 text-lg font-serif tracking-[0.1em] uppercase">
-            <a href="#acerca" class="mobile-link hover:text-bronce transition-colors">Acerca de</a>
-            <a href="#servicios" class="mobile-link hover:text-bronce transition-colors">Catálogo de Servicios</a>
-            <a href="#blog" class="mobile-link hover:text-bronce transition-colors">Blog</a>
-            <a href="#contacto" class="mobile-link hover:text-bronce transition-colors">Contacto</a>
-        </nav>
-        <a href="#reserva" class="mobile-link mt-4 bg-marron text-crema px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold">
-            Reserva Ahora 🗓
-        </a>
+      </div>
     </div>
 
-    <section class="relative h-[100svh] flex items-center justify-center overflow-hidden bg-marron">
-        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070&auto=format&fit=crop" alt="Piel Radiante" class="absolute inset-0 w-full h-full object-cover object-top md:object-center opacity-60 mix-blend-overlay">
-        
-        <div class="relative z-20 text-center px-4 flex flex-col items-center mt-12 md:mt-16 w-full max-w-4xl">
-            <h1 class="text-4xl sm:text-5xl md:text-7xl font-serif text-white mb-6 drop-shadow-md leading-[1.1]">
-                EL AMOR PROPIO ES <br class="hidden sm:block"> LA NUEVA BELLEZA.
-            </h1>
-            <p class="text-base sm:text-lg md:text-xl text-white/90 mb-10 px-4 font-light tracking-wide max-w-2xl">
-                Realza tu resplandor natural con nuestros tratamientos de cosmetología avanzada.
-            </p>
-            <a href="#servicios" class="border border-white text-white px-8 md:px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-white hover:text-marron transition-all duration-300 w-full sm:w-auto">
-                Ver Tratamientos
-            </a>
+    <div class="profile reveal">
+      <div class="profile-img">
+        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&auto=format&fit=crop" alt="Dr. Víctor Martínez">
+        <span class="profile-pill">Cirugía Estética Facial</span>
+      </div>
+      <div class="profile-body">
+        <h3>Dr. Víctor Martínez</h3>
+        <p class="role">Cirujano Estético & Plástico Facial</p>
+        <p>Hermano de Dafne y cirujano especializado en procedimientos estéticos faciales tanto quirúrgicos como mínimamente invasivos. Técnica refinada, resultados naturales y un enfoque humanizado en cada paciente.</p>
+        <div class="tags">
+          <span class="tag">Remodelación Facial</span>
+          <span class="tag">Alectomía</span>
+          <span class="tag">Lifting</span>
+          <span class="tag">Platisma</span>
+          <span class="tag">Mín. Invasivo</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="bg-marron text-crema py-3 marquee-container flex items-center border-t border-white/20">
-        <div class="marquee-content text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase font-semibold">
-            <span class="mx-4 md:mx-6">• Nuevos Tratamientos Láser CO2</span>
-            <span class="mx-4 md:mx-6">• Consultas Disponibles</span>
-            <span class="mx-4 md:mx-6">• Paquetes para Novias</span>
-            <span class="mx-4 md:mx-6">• Dafne Moz Clínica Estética</span>
-            <span class="mx-4 md:mx-6">• Nuevos Tratamientos Láser CO2</span>
-            <span class="mx-4 md:mx-6">• Consultas Disponibles</span>
-            <span class="mx-4 md:mx-6">• Paquetes para Novias</span>
-            <span class="mx-4 md:mx-6">• Dafne Moz Clínica Estética</span>
-        </div>
+<section class="services" id="servicios">
+  <div class="services-head reveal">
+    <div>
+      <p class="s-label">Catálogo</p>
+      <h2 class="s-title">Nuestros<br><em>Tratamientos</em></h2>
+    </div>
+    <p class="services-note">Protocolos internacionales de seguridad y tecnología de vanguardia en cada procedimiento.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="cosme">Cosmetología — Dafne Moz</button>
+    <button class="tab" data-tab="ciru">Cirugía Estética — Dr. Víctor Martínez</button>
+  </div>
+
+  <div class="svc-grid">
+    <!-- COSMETOLOGÍA -->
+    <div class="card on" data-c="cosme">
+      <div class="card-num">01</div><p class="card-cat">Láser</p>
+      <h3 class="card-name">CO2 Fraccionado</h3>
+      <p class="card-desc">Rejuvenecimiento avanzado y tratamiento de cicatrices. Estimula la producción de colágeno para una textura de piel impecable y duradera.</p>
+      <p class="card-price">$8,000 – $18,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">02</div><p class="card-cat">Láser</p>
+      <h3 class="card-name">ND:YAG</h3>
+      <p class="card-desc">Láser de alta precisión para manchas pigmentadas, rejuvenecimiento cutáneo y lesiones vasculares sin dañar la piel circundante.</p>
+      <p class="card-price">$3,000 – $8,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">03</div><p class="card-cat">Láser</p>
+      <h3 class="card-name">Depilación Láser</h3>
+      <p class="card-desc">Eliminación definitiva del vello no deseado por zona con tecnología láser certificada. Seguro, rápido y con resultados permanentes.</p>
+      <p class="card-price">Desde $1,800 DOP / zona</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">04</div><p class="card-cat">Láser Corporal</p>
+      <h3 class="card-name">Endoláser</h3>
+      <p class="card-desc">Tratamiento mínimamente invasivo para tensado de piel y reducción de grasa localizada en papada y cuerpo. Resultados desde la primera sesión.</p>
+      <p class="card-price">$25,000 – $80,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">05</div><p class="card-cat">Corporal</p>
+      <h3 class="card-name">Endoroller</h3>
+      <p class="card-desc">Tratamiento para celulitis y drenaje linfático. Mejora la circulación, reduce la retención de líquidos y moldea la figura progresivamente.</p>
+      <p class="card-price">$1,500 – $3,500 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">06</div><p class="card-cat">Corporal</p>
+      <h3 class="card-name">IMSS Cool</h3>
+      <p class="card-desc">Criolipólisis y tonificación para reducción de grasa localizada sin cirugía. Ideal para zonas resistentes como abdomen y flancos.</p>
+      <p class="card-price">$4,000 – $12,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">07</div><p class="card-cat">Corporal</p>
+      <h3 class="card-name">EMS Sculp</h3>
+      <p class="card-desc">Tonificación muscular intensiva mediante electroestimulación de alta frecuencia. Equivale a miles de contracciones musculares en una sola sesión.</p>
+      <p class="card-price">$5,000 – $12,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">08</div><p class="card-cat">Corporal</p>
+      <h3 class="card-name">Radiofrecuencia</h3>
+      <p class="card-desc">Reafirmación de la piel mediante calor controlado que estimula el colágeno. Resultados naturales para piel flácida en rostro y cuerpo.</p>
+      <p class="card-price">$850 – $3,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">09</div><p class="card-cat">Facial</p>
+      <h3 class="card-name">Bioestimulación (PLLA / PDRN)</h3>
+      <p class="card-desc">Regeneración celular profunda con bioestimuladores de colágeno. Para pérdida de volumen, flacidez incipiente y envejecimiento prematuro.</p>
+      <p class="card-price">$18,000 – $45,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">10</div><p class="card-cat">Facial</p>
+      <h3 class="card-name">Relleno de Labios / Perfilado</h3>
+      <p class="card-desc">Armonización facial con ácido hialurónico para volumen, definición e hidratación natural. Resultados inmediatos con aspecto completamente natural.</p>
+      <p class="card-price">$15,000 – $35,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">11</div><p class="card-cat">Facial</p>
+      <h3 class="card-name">Corrección de Ojeras</h3>
+      <p class="card-desc">Relleno en el surco nasoyugal con ácido hialurónico para eliminar ojeras hundidas y restaurar luminosidad al área periocular de forma natural.</p>
+      <p class="card-price">$12,000 – $30,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">12</div><p class="card-cat">Facial</p>
+      <h3 class="card-name">Tratamiento Acné / Manchas</h3>
+      <p class="card-desc">Protocolo médico-estético combinado para el control activo del acné y reducción de hiperpigmentación, manchas solares y melasma.</p>
+      <p class="card-price">$2,000 – $8,000 DOP</p>
+    </div>
+    <div class="card on" data-c="cosme">
+      <div class="card-num">13</div><p class="card-cat">Facial</p>
+      <h3 class="card-name">Botox</h3>
+      <p class="card-desc">Toxina botulínica para relajación de líneas de expresión y arrugas dinámicas. Resultados naturales que preservan la expresividad del rostro.</p>
+      <p class="card-price">$10,000 – $25,000 DOP</p>
     </div>
 
-    <section id="servicios" class="py-20 md:py-24 px-4 md:px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12 md:mb-16">
-            <h2 class="text-3xl md:text-4xl font-serif mb-4">Catálogo de Servicios</h2>
-            <p class="text-marron/70 text-sm md:text-base max-w-2xl mx-auto font-light px-4">Procedimientos estéticos avanzados diseñados para resaltar tu belleza natural con la más alta tecnología.</p>
-        </div>
+    <!-- CIRUGÍA DR. VÍCTOR -->
+    <div class="card" data-c="ciru">
+      <div class="card-num">01</div><p class="card-cat">Facial Quirúrgico</p>
+      <h3 class="card-name">Remodelación Facial</h3>
+      <p class="card-desc">Procedimiento integral para redefinir y armonizar los rasgos del rostro. Combina técnicas quirúrgicas y no quirúrgicas adaptadas al perfil individual de cada paciente.</p>
+      <p class="card-price">Consulta personalizada</p>
+    </div>
+    <div class="card" data-c="ciru">
+      <div class="card-num">02</div><p class="card-cat">Facial Quirúrgico</p>
+      <h3 class="card-name">Alectomía</h3>
+      <p class="card-desc">Reducción quirúrgica de las alas nasales para una nariz más refinada y proporcionada al rostro. Cicatrices mínimas y resultados permanentes.</p>
+      <p class="card-price">Consulta personalizada</p>
+    </div>
+    <div class="card" data-c="ciru">
+      <div class="card-num">03</div><p class="card-cat">Facial Quirúrgico</p>
+      <h3 class="card-name">Lifting Quirúrgico</h3>
+      <p class="card-desc">Cirugía de rejuvenecimiento facial que tensa los tejidos profundos y elimina el exceso de piel. Resultados naturales y duraderos de 8 a 12 años.</p>
+      <p class="card-price">Consulta personalizada</p>
+    </div>
+    <div class="card" data-c="ciru">
+      <div class="card-num">04</div><p class="card-cat">Mínimamente Invasivo</p>
+      <h3 class="card-name">Lifting Mínimamente Invasivo</h3>
+      <p class="card-desc">Alternativa al lifting tradicional con incisiones reducidas y recuperación acelerada. Ideal para pacientes en etapas tempranas de flacidez facial.</p>
+      <p class="card-price">Consulta personalizada</p>
+    </div>
+    <div class="card" data-c="ciru">
+      <div class="card-num">05</div><p class="card-cat">Cuello & Tercio Inferior</p>
+      <h3 class="card-name">Reposición del Platisma</h3>
+      <p class="card-desc">Tensado quirúrgico del músculo platisma para eliminar bandas del cuello y restaurar la línea mandibular. Rejuvenecimiento visible del tercio inferior del rostro.</p>
+      <p class="card-price">Consulta personalizada</p>
+    </div>
+    <div class="card" data-c="ciru">
+      <div class="card-num">06</div><p class="card-cat">Cuello & Tercio Inferior</p>
+      <h3 class="card-name">Rejuvenecimiento de Cuello</h3>
+      <p class="card-desc">Protocolo combinado —quirúrgico y/o mínimamente invasivo— para restaurar la tensión y definición del cuello y la zona submandibular. Perfil lateral redefinido.</p>
+      <p class="card-price">Consulta personalizada</p>
+    </div>
+  </div>
+</section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            <div class="group cursor-pointer">
-                <div class="overflow-hidden mb-4 h-72 md:h-80 bg-gray-200 relative">
-                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2070&auto=format&fit=crop" alt="Láser CO2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute top-4 left-4 bg-crema/90 text-marron text-[10px] uppercase tracking-widest px-3 py-1 font-semibold">Láser</div>
-                </div>
-                <h3 class="text-xl font-serif mb-2">CO2 Fraccionado</h3>
-                <p class="text-sm font-light text-marron/80 mb-4">Rejuvenecimiento avanzado y tratamiento de cicatrices para una textura de piel impecable.</p>
-                <div class="flex justify-between items-center border-t border-marron/20 pt-4">
-                    <span class="text-[10px] md:text-xs font-semibold tracking-widest uppercase">Desde $8,000 DOP</span>
-                    <span class="text-[10px] md:text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
-                </div>
-            </div>
+<div class="stats">
+  <div class="stats-row">
+    <div class="stat reveal"><div class="stat-n">+2K</div><div class="stat-l">Pacientes Atendidos</div></div>
+    <div class="stat reveal"><div class="stat-n">10+</div><div class="stat-l">Años de Experiencia</div></div>
+    <div class="stat reveal"><div class="stat-n">98%</div><div class="stat-l">Satisfacción</div></div>
+    <div class="stat reveal"><div class="stat-n">2</div><div class="stat-l">Especialistas Certificados</div></div>
+  </div>
+</div>
 
-            <div class="group cursor-pointer">
-                <div class="overflow-hidden mb-4 h-72 md:h-80 bg-gray-200 relative">
-                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2070&auto=format&fit=crop" alt="Relleno de Labios" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute top-4 left-4 bg-crema/90 text-marron text-[10px] uppercase tracking-widest px-3 py-1 font-semibold">Facial</div>
-                </div>
-                <h3 class="text-xl font-serif mb-2">Relleno de Labios</h3>
-                <p class="text-sm font-light text-marron/80 mb-4">Armonización facial con ácido hialurónico para volumen, perfilado e hidratación natural.</p>
-                <div class="flex justify-between items-center border-t border-marron/20 pt-4">
-                    <span class="text-[10px] md:text-xs font-semibold tracking-widest uppercase">Desde $15,000 DOP</span>
-                    <span class="text-[10px] md:text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
-                </div>
-            </div>
+<section class="clinic" id="clinica">
+  <div class="clinic-inner">
+    <div class="clinic-imgs reveal">
+      <div class="c-img tall"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop" alt="Clínica"></div>
+      <div class="c-img"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600&auto=format&fit=crop" alt="Tecnología"></div>
+      <div class="c-img"><img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=600&auto=format&fit=crop" alt="Tratamiento"></div>
+    </div>
+    <div class="clinic-text reveal">
+      <p class="s-label">La Clínica</p>
+      <h2 class="s-title">Tecnología de<br><em>vanguardia</em></h2>
+      <p class="s-desc">Nuestra clínica combina equipos de última generación con un ambiente diseñado para tu confort y privacidad total. Cada detalle ha sido pensado para que tu experiencia sea tan memorable como tus resultados.</p>
+      <ul class="clinic-list">
+        <li>Equipos láser certificados e importados de última generación</li>
+        <li>Área quirúrgica con los más altos estándares de seguridad y esterilización</li>
+        <li>Protocolos pre y post-operatorios de referencia internacional</li>
+        <li>Seguimiento personalizado durante todo tu proceso de transformación</li>
+        <li>Financiamiento disponible y planes de pago a tu medida</li>
+      </ul>
+      <a href="#reserva" class="btn-fl" style="display:inline-block;text-decoration:none;">Conoce la Clínica</a>
+    </div>
+  </div>
+</section>
 
-            <div class="group cursor-pointer">
-                <div class="overflow-hidden mb-4 h-72 md:h-80 bg-gray-200 relative">
-                    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop" alt="Endoláser Corporal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute top-4 left-4 bg-crema/90 text-marron text-[10px] uppercase tracking-widest px-3 py-1 font-semibold">Corporal</div>
-                </div>
-                <h3 class="text-xl font-serif mb-2">Endoláser</h3>
-                <p class="text-sm font-light text-marron/80 mb-4">Tratamiento mínimamente invasivo para el tensado de la piel y reducción de grasa localizada.</p>
-                <div class="flex justify-between items-center border-t border-marron/20 pt-4">
-                    <span class="text-[10px] md:text-xs font-semibold tracking-widest uppercase">Desde $25,000 DOP</span>
-                    <span class="text-[10px] md:text-xs font-semibold underline underline-offset-4 hover:text-bronce transition-colors">Reservar</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-12 md:mt-16">
-            <a href="#catalogo" class="inline-block border border-marron text-marron px-8 md:px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-marron hover:text-crema transition-all duration-300 w-full sm:w-auto">
-                Ver Catálogo Completo
-            </a>
-        </div>
-    </section>
+<section class="testi" id="testimonios">
+  <div class="testi-head reveal">
+    <p class="s-label">Testimonios</p>
+    <h2 class="s-title">Lo que dicen<br><em>nuestros pacientes</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="t-card reveal">
+      <div class="t-q">"</div>
+      <p class="t-text">Dafne transformó mi piel por completo. Llegué con cicatrices de acné y después de tres sesiones de CO2 Fraccionado, mi piel luce increíble. Su atención personalizada y profesionalismo son incomparables.</p>
+      <div class="t-author"><div class="t-av">MR</div><div><p class="t-name">María Rodríguez</p><p class="t-detail">CO2 Fraccionado — Dafne Moz</p></div></div>
+    </div>
+    <div class="t-card reveal">
+      <div class="t-q">"</div>
+      <p class="t-text">El Dr. Martínez realizó mi lifting con una naturalidad que nunca esperé. Luzco como yo, pero diez años más joven. Toda la experiencia en la clínica fue de primer nivel absoluto.</p>
+      <div class="t-author"><div class="t-av">CP</div><div><p class="t-name">Carmen Peña</p><p class="t-detail">Lifting Quirúrgico — Dr. Víctor Martínez</p></div></div>
+    </div>
+    <div class="t-card reveal">
+      <div class="t-q">"</div>
+      <p class="t-text">La bioestimulación con Dafne fue reveladora. Mi piel recuperó volumen y luminosidad de forma completamente natural. El seguimiento post-tratamiento es de primer nivel.</p>
+      <div class="t-author"><div class="t-av">AC</div><div><p class="t-name">Andrea Castillo</p><p class="t-detail">Bioestimulación PLLA — Dafne Moz</p></div></div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        let isMenuOpen = false;
+<section class="reserva" id="reserva">
+  <div class="reserva-inner">
+    <div class="reserva-info reveal">
+      <p class="s-label">Reserva</p>
+      <h2 class="s-title">Comienza tu<br><em>transformación</em></h2>
+      <p class="s-desc">Agenda tu consulta de evaluación. Te orientamos sobre el tratamiento ideal para tus objetivos con total claridad y transparencia en cada paso del proceso.</p>
+      <div class="c-list">
+        <div class="c-item"><div class="c-icon">📍</div><div class="c-txt"><strong>Ubicación</strong><p>Santo Domingo, República Dominicana</p></div></div>
+        <div class="c-item"><div class="c-icon">💬</div><div class="c-txt"><strong>WhatsApp</strong><p>+1 (809) 000-0000</p></div></div>
+        <div class="c-item"><div class="c-icon">📧</div><div class="c-txt"><strong>Email</strong><p>info@dafnemoz.com</p></div></div>
+        <div class="c-item"><div class="c-icon">🕐</div><div class="c-txt"><strong>Horario</strong><p>Lun – Vie: 9am – 7pm · Sáb: 9am – 2pm</p></div></div>
+      </div>
+    </div>
 
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('translate-x-full');
-                document.body.classList.add('menu-open');
-                // Cambiar a icono 'X'
-                menuBtn.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>`;
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.classList.remove('menu-open');
-                // Cambiar a icono 'Hamburguesa'
-                menuBtn.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>`;
-            }
-        }
+    <div class="form-wrap reveal">
+      <h3>Solicitar Cita</h3>
+      <p class="form-sub">Te contactamos en menos de 24 horas</p>
+      <div class="frow">
+        <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+        <div class="fg"><label>Apellido</label><input type="text" placeholder="Tu apellido"></div>
+      </div>
+      <div class="fg"><label>Correo Electrónico</label><input type="email" placeholder="correo@ejemplo.com"></div>
+      <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="+1 (809) 000-0000"></div>
+      <div class="fg">
+        <label>Especialista de Interés</label>
+        <select id="specSel">
+          <option value="">Selecciona...</option>
+          <option value="dafne">Dafne Moz — Cosmetología Avanzada</option>
+          <option value="victor">Dr. Víctor Martínez — Cirugía Estética</option>
+          <option value="ambos">Consulta General</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Tratamiento de Interés</label>
+        <select id="treatSel"><option>Selecciona primero el especialista...</option></select>
+      </div>
+      <div class="fg"><label>Mensaje (opcional)</label><textarea placeholder="Cuéntanos más sobre lo que buscas..."></textarea></div>
+      <button class="btn-submit">Solicitar Consulta</button>
+    </div>
+  </div>
+</section>
 
-        menuBtn.addEventListener('click', toggleMenu);
+<footer id="blog">
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <div class="logo">DAFNEMOZ</div>
+      <span class="sub">Cosmetología Avanzada & Cirugía Estética</span>
+      <p>Clínica estética integral en Santo Domingo, RD. Dos especialistas, una misión: tu mejor versión.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Cosmetología</h4>
+      <ul>
+        <li><a href="#servicios">CO2 Fraccionado</a></li>
+        <li><a href="#servicios">ND:YAG</a></li>
+        <li><a href="#servicios">Endoláser</a></li>
+        <li><a href="#servicios">Bioestimulación</a></li>
+        <li><a href="#servicios">Botox</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Cirugía Estética</h4>
+      <ul>
+        <li><a href="#servicios">Remodelación Facial</a></li>
+        <li><a href="#servicios">Lifting Quirúrgico</a></li>
+        <li><a href="#servicios">Alectomía</a></li>
+        <li><a href="#servicios">Reposición Platisma</a></li>
+        <li><a href="#servicios">Rejuv. de Cuello</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Clínica</h4>
+      <ul>
+        <li><a href="#acerca">Nosotros</a></li>
+        <li><a href="#clinica">Tecnología</a></li>
+        <li><a href="#testimonios">Testimonios</a></li>
+        <li><a href="#reserva">Reservar Cita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>© 2025 Dafne Moz Clínica Estética. Todos los derechos reservados.</p>
+    <div class="ft-socials">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
 
-        // Cerrar el menú al hacer clic en un enlace
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (isMenuOpen) toggleMenu();
-            });
-        });
-    </script>
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('shadow', scrollY > 50));
+
+document.getElementById('ham').onclick = () => document.getElementById('mobMenu').classList.add('open');
+document.getElementById('mobClose').onclick = () => document.getElementById('mobMenu').classList.remove('open');
+document.querySelectorAll('.mob-menu a').forEach(a => a.onclick = () => document.getElementById('mobMenu').classList.remove('open'));
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+    tab.classList.add('on');
+    const cat = tab.dataset.tab;
+    document.querySelectorAll('.card').forEach(c => c.classList.toggle('on', c.dataset.c === cat));
+  });
+});
+
+const treats = {
+  dafne: ['CO2 Fraccionado','ND:YAG','Depilación Láser','Endoláser','Endoroller','IMSS Cool','EMS Sculp','Radiofrecuencia','Bioestimulación PLLA/PDRN','Relleno de Labios / Perfilado','Corrección de Ojeras','Tratamiento Acné / Manchas','Botox'],
+  victor: ['Remodelación Facial','Alectomía','Lifting Quirúrgico','Lifting Mínimamente Invasivo','Reposición del Platisma','Rejuvenecimiento de Cuello'],
+  ambos: ['Consulta General']
+};
+document.getElementById('specSel').addEventListener('change', function() {
+  const s = document.getElementById('treatSel');
+  s.innerHTML = '<option value="">Selecciona...</option>';
+  (treats[this.value] || []).forEach(t => { const o = document.createElement('option'); o.textContent = t; s.appendChild(o); });
+  if (!this.value) s.innerHTML = '<option>Selecciona primero el especialista...</option>';
+});
+
+const ro = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), i * 70); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
 </body>
 </html>
+
