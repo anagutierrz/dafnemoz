@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dafne Moz | Cosmetología Avanzada & Cirugía Estética</title>
+<title>Dafne Moz | Clínica Estética & Cirugía Estética</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -120,6 +120,55 @@ nav.shadow { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
   letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: all 0.3s;
 }
 .btn-fl:hover { background: var(--gold); border-color: var(--gold); }
+
+/* VIDEO SECTION */
+.video-section { background: var(--dark); padding: 5rem 2rem; }
+.video-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
+.video-text .s-label { color: var(--gold-l); }
+.video-text .s-label::after { background: var(--gold-l); }
+.video-text .s-title { color: var(--white); }
+.video-text .s-desc { color: rgba(255,255,255,0.55); margin-bottom: 2rem; }
+.video-text .btn-fl { display: inline-block; text-decoration: none; }
+.video-wrap {
+  position: relative; width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--dark-mid);
+  border: 1px solid rgba(184,150,90,0.25);
+  overflow: hidden;
+}
+.video-wrap video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.video-wrap iframe {
+  width: 100%; height: 100%; border: none; display: block;
+}
+.video-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.25rem; cursor: pointer;
+}
+.video-placeholder:hover .play-btn { background: var(--gold); transform: scale(1.08); }
+.play-btn {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: rgba(184,150,90,0.9);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s; flex-shrink: 0;
+}
+.play-btn svg { width: 22px; height: 22px; fill: white; margin-left: 4px; }
+.video-placeholder p {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.video-tag {
+  position: absolute; bottom: 0; left: 0;
+  background: var(--gold); color: var(--white);
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.4rem 1rem;
+}
+@media (max-width: 960px) {
+  .video-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+}
 
 /* TICKER */
 .ticker { background: var(--dark); padding: 0.9rem 0; overflow: hidden; }
@@ -303,7 +352,7 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
   </div>
   <div class="nav-center">
     <a href="#" class="brand">DAFNEMOZ</a>
-    <span class="sub">Cosmetología Avanzada</span>
+    <span class="sub">Clínica Estética</span>
   </div>
   <div class="nav-right">
     <a href="#blog">Blog</a>
@@ -326,10 +375,45 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
   <div class="hero-img"></div>
   <div class="hero-content">
     <h1>El amor propio<br>es la nueva belleza.</h1>
-    <p>Cosmetología avanzada y cirugía estética facial de élite. Realza tu resplandor natural con los mejores especialistas.</p>
+    <p>Clínica estética integral de referencia en Santo Domingo. Realza tu resplandor natural con los mejores especialistas.</p>
     <div class="hero-btns">
       <a href="#servicios" class="btn-ol">Ver Tratamientos</a>
       <a href="#acerca" class="btn-fl">Conoce al Equipo</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="video">
+  <div class="video-inner">
+    <div class="video-text reveal">
+      <p class="s-label">Dr. Víctor Martínez</p>
+      <h2 class="s-title">Conoce al<br><em>Especialista</em></h2>
+      <p class="s-desc">El Dr. Víctor Martínez te explica su filosofía, su técnica y por qué cada procedimiento está diseñado para resultados naturales y duraderos.</p>
+      <a href="#reserva" class="btn-fl">Agendar con el Dr.</a>
+    </div>
+    <div class="video-wrap reveal">
+      <!--
+        INSTRUCCIONES PARA AGREGAR EL VIDEO:
+        ─────────────────────────────────────
+        OPCIÓN A — Video de YouTube/Vimeo:
+          Reemplaza todo el bloque .video-placeholder por:
+          <iframe src="https://www.youtube.com/embed/TU_VIDEO_ID?rel=0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+
+        OPCIÓN B — Archivo de video propio (.mp4):
+          <video controls poster="URL_DE_MINIATURA.jpg">
+            <source src="URL_DEL_VIDEO.mp4" type="video/mp4">
+          </video>
+      -->
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <p>Video del Dr. Víctor Martínez</p>
+      </div>
+      <span class="video-tag">Cirugía Estética Facial</span>
     </div>
   </div>
 </section>
@@ -368,7 +452,7 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
     <div class="team-intro-text">
       <p class="s-label">Nuestro Equipo</p>
       <h2 class="s-title">Dos especialistas,<br><em>una visión.</em></h2>
-      <p class="s-desc">Somos una clínica de estética integral liderada por dos hermanos con la misma pasión: transformar vidas a través de la belleza. Combinamos cosmetología avanzada con cirugía estética facial para ofrecer resultados que hablan por sí solos.</p>
+      <p class="s-desc">Somos una clínica de estética integral liderada por dos hermanos con la misma pasión: transformar vidas a través de la belleza. Combinamos clínica estética con cirugía estética facial para ofrecer resultados que hablan por sí solos.</p>
       <br>
       <a href="#reserva" class="btn-fl" style="display:inline-block;text-decoration:none;margin-top:1rem;">Agendar Consulta</a>
     </div>
@@ -382,7 +466,7 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
     <div class="profile reveal">
       <div class="profile-img">
         <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop" alt="Dafne Moz">
-        <span class="profile-pill">Cosmetología Avanzada</span>
+        <span class="profile-pill">Clínica Estética</span>
       </div>
       <div class="profile-body">
         <h3>Dafne Moz</h3>
@@ -430,7 +514,7 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
   </div>
 
   <div class="tabs">
-    <button class="tab on" data-tab="cosme">Cosmetología — Dafne Moz</button>
+    <button class="tab on" data-tab="cosme">Clínica Estética — Dafne Moz</button>
     <button class="tab" data-tab="ciru">Cirugía Estética — Dr. Víctor Martínez</button>
   </div>
 
@@ -638,7 +722,7 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
         <label>Especialista de Interés</label>
         <select id="specSel">
           <option value="">Selecciona...</option>
-          <option value="dafne">Dafne Moz — Cosmetología Avanzada</option>
+          <option value="dafne">Dafne Moz — Clínica Estética</option>
           <option value="victor">Dr. Víctor Martínez — Cirugía Estética</option>
           <option value="ambos">Consulta General</option>
         </select>
@@ -657,11 +741,11 @@ footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.0
   <div class="ft-inner">
     <div class="ft-brand">
       <div class="logo">DAFNEMOZ</div>
-      <span class="sub">Cosmetología Avanzada & Cirugía Estética</span>
+      <span class="sub">Clínica Estética & Cirugía Estética</span>
       <p>Clínica estética integral en Santo Domingo, RD. Dos especialistas, una misión: tu mejor versión.</p>
     </div>
     <div class="ft-col">
-      <h4>Cosmetología</h4>
+      <h4>Clínica Estética</h4>
       <ul>
         <li><a href="#servicios">CO2 Fraccionado</a></li>
         <li><a href="#servicios">ND:YAG</a></li>
@@ -736,4 +820,3 @@ document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 </script>
 </body>
 </html>
-
